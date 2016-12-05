@@ -125,13 +125,13 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
 
     sigmoid_0 = sigmoid(scalars[target])
 
-    cost = np.log(sigmoid_0)
+    cost = -np.log(sigmoid_0)
 
-    grad[target] = (1.0 - sigmoid_0) * predicted
+    grad[target] = (-1.0) * (1.0 - sigmoid_0) * predicted
 
-    gradPred = (1.0 - sigmoid_0) * outputVectors[target]
+    gradPred = (-1.0) * (1.0 - sigmoid_0) * outputVectors[target]
 
-    for i in range(0):
+    for i in range(K):
 
         my_word_index = dataset.sampleTokenIdx()
 
@@ -139,11 +139,11 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
 
         my_sigmoid = sigmoid_list[my_word_index]
 
-        cost += np.log(my_sigmoid)
+        cost -= np.log(my_sigmoid)
 
-        grad[my_word_index] += (-1.0) * (1.0 - my_sigmoid) * predicted
+        grad[my_word_index] -= (-1.0) * (1.0 - my_sigmoid) * predicted
 
-        gradPred += (-1.0) * (1.0 - my_sigmoid) * outputVectors[my_word_index]
+        gradPred -= (-1.0) * (1.0 - my_sigmoid) * outputVectors[my_word_index]
 
     ### YOUR CODE HERE
     #raise NotImplementedError
